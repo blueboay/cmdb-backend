@@ -1,7 +1,9 @@
 
 from django.urls import path
-from . import views
+from . import ecs
+from . import rds
 
 urlpatterns = [
-    path('ecs', views.listServers)
+    path('ecs', ecs.listServers),
+    path('rds', rds.listRDS)
 ]
