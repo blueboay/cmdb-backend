@@ -18,27 +18,29 @@ conn = connection.Connection(project_id=projectId,
                              sk=SK,)
 
 
-def list_servers():
-    servers = conn.compute.servers(limit=10)
-    for server in servers:
-        server_name = server.name
-        ipaddress = server.addresses
-        flavor = server.flavor
-        status = server.status
-        print(status)
+class ECS:
+
+    def listServers(self):
+        hosts = conn.compute.servers(limit=10)
+        result = []
+        for s in hosts:
+            data = dict()
+            data.update({
+                # 名称
+                "name": s.name,
+                # IP地址
+                "ip": [ip["addr"] for addrs in s.addresses.values() for ip in addrs],
+                # 可用区
+                "zone": s.availability_zone,
+                # 运行状态
+                "status": s.status,
+                # 规格
+                "flavor": s.flavor["id"]
+            })
+            result.append(data)
+        result = json.dumps({"code": 0, "msg": "", "count": 500, "data": result})
+        return HttpResponse(result)
 
 
-def hello(request):
-    data = {"code": 0,
-            "msg": "",
-            "count": 256,
-            "data": [{"name": "sh2-03-k8s_test-01",
-                      "ip": "192.168.81.183",
-                      "status": "运行中",
-                      "zone": "可用区3",
-                      "mode": "按量付费",
-                      "kind": "32vCPUs | 64GB | c6.8xlarge.2"
-                      }]
-            }
-    data = json.dumps(data)
-    return HttpResponse(data)
+if __name__ == '__main__':
+    pass
