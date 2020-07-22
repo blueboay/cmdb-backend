@@ -37,14 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'asset_management',
-    'corsheaders'
+    'asset_management',  # 资产管理
+    'corsheaders',  # 跨域
 ]
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # 跨域
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -132,7 +132,7 @@ STATICFILES_DIRS = (
 
 ALLOWED_HOSTS = ["*"]
 
-# CORS
+# 跨域
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:5500',
 )
